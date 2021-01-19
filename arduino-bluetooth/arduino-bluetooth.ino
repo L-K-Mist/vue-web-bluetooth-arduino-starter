@@ -63,7 +63,7 @@ void useNewData() {
           char * part3;
           // This is how we split a string(actually character array) with a delimiter without c++ std lib.
           // See: https://hackingmajenkoblog.wordpress.com/2016/02/04/the-evils-of-arduino-strings/
-          const char * delimiter = " ";
+          const char * delimiter = ",";
           part1 = strtok(receivedChars,delimiter);
           part2 = strtok (NULL,delimiter);
           part3 = strtok (NULL,delimiter);
@@ -73,17 +73,23 @@ void useNewData() {
           Serial.println(part2);
           Serial.print("third part: ");
           Serial.println(part3);
-        if(strcmp(receivedChars, "Hi from web")){
+          Serial.println(receivedChars);
+        if(strcmp(part1, "Hi from web") == 0){
+          Serial.println("Yay web says hi!");
           BluetoothDevice.println("Hi from arduino");
         }
         // I'll be using this for a temperature controller, 
         // but just leaving it here as an example of 
         // the kind of commands you can send.
         // If you send "setT 72" then you could handle that here.
-        if(strcmp(part1, "setT") == 0){
+        if(strcmp(part1, "setT") == 0){ // In this strange world strcmp is 0 if the comparison is true.
           Serial.print("I see targetTemp: ");
           Serial.println(atof(part2));
           // Heater.setTarget(atof(part2));
+        }
+        if(strcmp(part1, "echo") == 0){
+          Serial.println("I must echo...");
+           BluetoothDevice.print(part2);
         }
         if(strcmp(part1, "getT") == 0){
           Serial.println("I must fetch tempC...");

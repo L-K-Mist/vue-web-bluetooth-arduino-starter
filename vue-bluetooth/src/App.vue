@@ -48,6 +48,7 @@ export default {
       console.log("onChange - message", message);
       if (message.includes("Hi from arduino")) {
         console.log(`Handshake completed. Arduino says: ${message}`);
+        debugger;
       }
     },
     send(message) {

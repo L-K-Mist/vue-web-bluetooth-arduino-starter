@@ -32,5 +32,6 @@ export default {
     // Why the <opening and closing> characters?
     // Went with this guy's example 3 for the reasons he mentions: https://forum.arduino.cc/index.php?topic=396450.0
     this.characteristic.writeValue(enc.encode(`<${message}>`));
+    debugger;
   },
 };

@@ -6,6 +6,7 @@
       id="id"
       v-model="command"
     ></v-text-field>
+    <v-checkbox v-model="echo" label="Must arduino echo back?"></v-checkbox>
     <v-btn @click="send(command)" color="success">Send Command</v-btn>
   </v-container>
 </template>
@@ -17,10 +18,11 @@ export default {
 
   data: () => ({
     command: "",
+    echo: false,
   }),
   methods: {
     send(message) {
-      bluetooth.send(message);
+      bluetooth.send(this.echo ? `echo,${message}` : message);
     },
   },
 };
