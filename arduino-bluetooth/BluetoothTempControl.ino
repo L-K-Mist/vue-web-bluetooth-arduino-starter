@@ -1,14 +1,6 @@
 #include <SoftwareSerial.h>
-
-#include "thermistor.h"
 // Analog pin used to read the NTC
 #define NTC_PIN A0
-
-#include "TempSensor.h"
-#include "Heater.h"
-
-TempSensor tempSensor(NTC_PIN);
-Heater heater(&tempSensor);
 
 // Global temperature reading
 float temp;
@@ -17,56 +9,62 @@ SoftwareSerial BluetoothDevice(3,4);
 
 const byte numChars = 32;
 char receivedChars[numChars];
-
 boolean newData = false;
 
 void setup() {
-  heater.setup();
-
-  Serial.begin(115200);
+  Serial.begin(115200); 
   BluetoothDevice.begin(115200);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
   delay(100);
+  // For Handshaking
   establishContact();  // send a byte to establish contact until receiver responds
 }
 
 void loop() {
-  recvWithStartEndMarkers();
+  receiveWithStartEndMarkers();
   useNewData();
   delay(100);
 }
 
-void recvWithStartEndMarkers() {
-    static boolean recvInProgress = false;
-    static byte ndx = 0;
-    char startMarker = '<';
-    char endMarker = '>';
-    char rc;
- 
-    while (BluetoothDevice.available() > 0 && newData == false) {
-        rc = BluetoothDevice.read();
+void establishContact() {
+  while (BluetoothDevice.available() <= 0) {
+    BluetoothDevice.println("A");   // send an initial string
+    delay(600);
+  }
+}
 
-        if (recvInProgress == true) {
-            if (rc != endMarker) {
-                receivedChars[ndx] = rc;
-                ndx++;
-                if (ndx >= numChars) {
-                    ndx = numChars - 1;
-                }
-            }
-            else {
-                receivedChars[ndx] = '\0'; // terminate the string
-                recvInProgress = false;
-                ndx = 0;
-                newData = true;
+
+void receiveWithStartEndMarkers() {
+  static boolean receiveInProgress = false;
+  static byte index = 0;
+  char startMarker = '<';
+  char endMarker = '>';
+  char incomingCharacter;
+
+  while (BluetoothDevice.available() > 0 && newData == false) {
+    incomingCharacter = BluetoothDevice.read();
+
+    if (receiveInProgress == true) {
+        if (incomingCharacter != endMarker) {
+            receivedChars[index] = incomingCharacter;
+            index++;
+            if (index >= numChars) {
+                index = numChars - 1;
             }
         }
-        else if (rc == startMarker) {
-            recvInProgress = true;
+        else {
+            receivedChars[index] = '\0'; // terminate the string
+            receiveInProgress = false;
+            index = 0;
+            newData = true;
         }
     }
+    else if (incomingCharacter == startMarker) {
+        receiveInProgress = true;
+    }
+  }
 }
 
 void useNewData() {
@@ -76,21 +74,18 @@ void useNewData() {
           char * part1;
           char * part2;
           char * part3;
-          part1 = strtok(receivedChars," ");
-          part2 = strtok (NULL," ");
-          part3 = strtok (NULL," ");
+          // This is how we split a string(actually character array) with a delimiter without c++ std lib.
+          const char delimiter = " ";
+          part1 = strtok(receivedChars,delimiter);
+          part2 = strtok (NULL,delimiter);
+          part3 = strtok (NULL,delimiter);
           Serial.print("first part: ");
           Serial.println(part1);
           Serial.print("second part: ");
           Serial.println(part2);
           Serial.print("third part: ");
           Serial.println(part3);
-          // Serial.print("second bit: ");
-          // Serial.println(part1[1]);
-          // float aFloat = atof(strtok (NULL," "));  
-          // Serial.println(aFloat, 3);
         if(strcmp(part1, "setT") == 0){
-          
           Serial.print("I see targetTemp: ");
           Serial.println(atof(part2));
         }
@@ -99,19 +94,11 @@ void useNewData() {
           BluetoothDevice.print("TempC: ");
           BluetoothDevice.println(heater.getTempC());
         }
-
         newData = false;
     }
 }
 
 
-// TODO Research async-await like functionality for c++ arduino.
-void establishContact() {
-  while (BluetoothDevice.available() <= 0) {
-    BluetoothDevice.println("A");   // send an initial string
-    delay(600);
-  }
-}
 
 
 
