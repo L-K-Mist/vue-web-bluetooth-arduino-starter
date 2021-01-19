@@ -1,4 +1,5 @@
 #include <SoftwareSerial.h>
+
 // Analog pin used to read the NTC
 #define NTC_PIN A0
 
@@ -14,7 +15,7 @@ boolean newData = false;
 void setup() {
   Serial.begin(115200); 
   BluetoothDevice.begin(115200);
-  while (!Serial || !BluetoothDevice) {
+  while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
   delay(100);
@@ -46,7 +47,7 @@ void receiveWithStartEndMarkers() {
   while (BluetoothDevice.available() > 0 && newData == false) {
     incomingCharacter = BluetoothDevice.read();
 
-    if (receiveInProgress == true) {
+    if (receiveInProgress == true)
         if (incomingCharacter != endMarker) {
             receivedChars[index] = incomingCharacter;
             index++;
@@ -60,12 +61,12 @@ void receiveWithStartEndMarkers() {
             index = 0;
             newData = true;
         }
-    }
     else if (incomingCharacter == startMarker) {
         receiveInProgress = true;
     }
   }
 }
+
 
 void useNewData() {
     if (newData == true) {
@@ -75,7 +76,7 @@ void useNewData() {
           char * part2;
           char * part3;
           // This is how we split a string(actually character array) with a delimiter without c++ std lib.
-          const char delimiter = " ";
+          const char * delimiter = " ";
           part1 = strtok(receivedChars,delimiter);
           part2 = strtok (NULL,delimiter);
           part3 = strtok (NULL,delimiter);

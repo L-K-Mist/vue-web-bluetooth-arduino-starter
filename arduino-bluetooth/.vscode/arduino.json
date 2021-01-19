@@ -1,5 +1,5 @@
 {
-    "sketch": "BluetoothTempControl.ino",
+    "sketch": "arduino-bluetooth.ino",
     "board": "arduino:avr:uno",
     "port": "/dev/ttyACM0"
 }

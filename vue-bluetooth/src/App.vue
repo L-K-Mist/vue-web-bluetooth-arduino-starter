@@ -28,7 +28,19 @@ export default {
   // },
   methods: {
     async start() {
-      this.myCharacteristic = await bluetooth.initialize({}, this.onChange);
+      const device = await navigator.bluetooth.requestDevice({
+        filters: [
+          {
+            name: "BTO5", // BTO5 is a common default name on these BLE modules.
+          },
+        ],
+        optionalServices: [0xffe0],
+      });
+      this.myCharacteristic = await bluetooth.initialize(
+        {},
+        this.onChange,
+        device
+      );
     },
     onChange(event) {
       const value = event.target.value;
