@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import bluetooth from "@/helpers/bluetooth";
 export default {
   name: "SendString",
 
@@ -19,8 +20,7 @@ export default {
   }),
   methods: {
     send(message) {
-      this.$store.dispatch("bluetooth/send", message);
-      debugger;
+      bluetooth.send(message);
     },
   },
 };

@@ -3,7 +3,9 @@
     <v-app-bar app color="primary" dark>
       Web Bluetooth Temp Controller
       <v-spacer></v-spacer>
-      <v-btn @click="start">See Devices</v-btn>
+      <v-btn color="secondary" @click="start"
+        ><v-icon class="mr-3">mdi-bluetooth</v-icon> See Devices</v-btn
+      >
     </v-app-bar>
 
     <v-main>
@@ -13,10 +15,9 @@
 </template>
 
 <script>
-import bluetooth from "./helpers/bluetooth";
-export default {
-  name: "SendString",
+import bluetooth from "@/helpers/bluetooth";
 
+export default {
   data: () => ({
     message: null,
     myCharacteristic: null,
@@ -28,19 +29,26 @@ export default {
   // },
   methods: {
     async start() {
-      const device = await navigator.bluetooth.requestDevice({
-        filters: [
-          {
-            name: "BTO5", // BTO5 is a common default name on these BLE modules.
-          },
-        ],
-        optionalServices: [0xffe0],
-      });
-      this.myCharacteristic = await bluetooth.initialize(
-        {},
-        this.onChange,
-        device
-      );
+      try {
+        const device = await navigator.bluetooth.requestDevice({
+          filters: [
+            {
+              name: "BT05",
+            },
+          ],
+          optionalServices: [0xffe0],
+        });
+        // const server = await device.gatt.connect();
+        // const service = await server.getPrimaryService(0xffe0);
+        // const characteristic = await service.getCharacteristic(0xffe1);
+        this.myCharacteristic = await bluetooth.initialize(
+          {},
+          this.onChange,
+          device
+        );
+      } catch (error) {
+        console.error(error);
+      }
     },
     onChange(event) {
       const value = event.target.value;

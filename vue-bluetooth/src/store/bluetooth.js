@@ -25,7 +25,6 @@ const actions = {
     };
     try {
       state.arduinoCharacteristic = await bluetooth.initialize({}, onChange);
-      debugger;
     } catch (error) {
       console.error(error);
     }
@@ -39,7 +38,6 @@ const actions = {
   async send({ state }, payload) {
     let enc = new TextEncoder(); // By default this encodes to utf-8
     state.arduinoCharacteristic.writeValue(enc.encode(`<${payload}>`));
-    debugger;
   },
 };
 

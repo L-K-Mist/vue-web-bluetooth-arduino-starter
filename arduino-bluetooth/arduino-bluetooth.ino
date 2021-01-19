@@ -18,9 +18,9 @@ void setup() {
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
-  delay(100);
+  delay(1000);
   // For Handshaking
-  establishContact();  // send a byte to establish contact until receiver responds
+  // establishContact();  // send a byte to establish contact until receiver responds
 }
 
 void loop() {
@@ -29,13 +29,12 @@ void loop() {
   delay(100);
 }
 
-void establishContact() {
-  while (BluetoothDevice.available() <= 0) {
-    BluetoothDevice.println("A");   // send an initial string
-    delay(600);
-  }
-}
-
+// void establishContact() {
+//   while (BluetoothDevice.available() <= 0) {
+//     BluetoothDevice.println("A");   // send an initial string
+//     delay(600);
+//   }
+// }
 
 void receiveWithStartEndMarkers() {
   static boolean receiveInProgress = false;
@@ -66,7 +65,6 @@ void receiveWithStartEndMarkers() {
     }
   }
 }
-
 
 void useNewData() {
     if (newData == true) {
