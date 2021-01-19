@@ -24,28 +24,19 @@ export default {
     count: 0,
     command: "",
   }),
-  // beforeDestroy() {
-  //   this.$store.dispatch("bluetooth/garbageCollect");
-  // },
+  mounted() {
+    // this.start(); // This just demonstrates that start only works if triggered by a user action.
+  },
+  beforeDestroy() {
+    this.myCharacteristic.removeEventListener(
+      "characteristicvaluechanged",
+      this.onChange
+    );
+  },
   methods: {
     async start() {
       try {
-        const device = await navigator.bluetooth.requestDevice({
-          filters: [
-            {
-              name: "BT05",
-            },
-          ],
-          optionalServices: [0xffe0],
-        });
-        // const server = await device.gatt.connect();
-        // const service = await server.getPrimaryService(0xffe0);
-        // const characteristic = await service.getCharacteristic(0xffe1);
-        this.myCharacteristic = await bluetooth.initialize(
-          {},
-          this.onChange,
-          device
-        );
+        this.myCharacteristic = await bluetooth.initialize({}, this.onChange);
       } catch (error) {
         console.error(error);
       }
@@ -54,14 +45,9 @@ export default {
       const value = event.target.value;
       let decoder = new TextDecoder("utf-8");
       let message = decoder.decode(value);
-      console.log("handleCharacteristicValueChanged - message", message);
-      if (message.includes("A")) {
-        this.count++;
-        console.log("count", this.count);
-        if (this.count > 3) {
-          this.send("Hello from Web");
-          this.count = 0;
-        }
+      console.log("onChange - message", message);
+      if (message.includes("Hi from arduino")) {
+        console.log(`Handshake completed. Arduino says: ${message}`);
       }
     },
     send(message) {

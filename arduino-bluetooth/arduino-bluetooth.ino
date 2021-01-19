@@ -15,12 +15,7 @@ boolean newData = false;
 void setup() {
   Serial.begin(115200); 
   BluetoothDevice.begin(115200);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
   delay(1000);
-  // For Handshaking
-  // establishContact();  // send a byte to establish contact until receiver responds
 }
 
 void loop() {
@@ -28,13 +23,6 @@ void loop() {
   useNewData();
   delay(100);
 }
-
-// void establishContact() {
-//   while (BluetoothDevice.available() <= 0) {
-//     BluetoothDevice.println("A");   // send an initial string
-//     delay(600);
-//   }
-// }
 
 void receiveWithStartEndMarkers() {
   static boolean receiveInProgress = false;
@@ -74,6 +62,7 @@ void useNewData() {
           char * part2;
           char * part3;
           // This is how we split a string(actually character array) with a delimiter without c++ std lib.
+          // See: https://hackingmajenkoblog.wordpress.com/2016/02/04/the-evils-of-arduino-strings/
           const char * delimiter = " ";
           part1 = strtok(receivedChars,delimiter);
           part2 = strtok (NULL,delimiter);
@@ -84,13 +73,22 @@ void useNewData() {
           Serial.println(part2);
           Serial.print("third part: ");
           Serial.println(part3);
+        if(strcmp(receivedChars, "Hi from web")){
+          BluetoothDevice.println("Hi from arduino");
+        }
+        // I'll be using this for a temperature controller, 
+        // but just leaving it here as an example of 
+        // the kind of commands you can send.
+        // If you send "setT 72" then you could handle that here.
         if(strcmp(part1, "setT") == 0){
           Serial.print("I see targetTemp: ");
           Serial.println(atof(part2));
+          // Heater.setTarget(atof(part2));
         }
         if(strcmp(part1, "getT") == 0){
           Serial.println("I must fetch tempC...");
           BluetoothDevice.print("TempC: ");
+          // Heater.getTemp();
         }
         newData = false;
     }
