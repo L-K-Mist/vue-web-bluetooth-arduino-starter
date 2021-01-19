@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
+    <v-app-bar app color="accent">
       Web Bluetooth Temp Controller
       <v-spacer></v-spacer>
-      <v-btn color="secondary" @click="start"
+      <v-btn color="primary" @click="start"
         ><v-icon class="mr-3">mdi-bluetooth</v-icon> See Devices</v-btn
       >
     </v-app-bar>
@@ -45,7 +45,7 @@ export default {
       const value = event.target.value;
       let decoder = new TextDecoder("utf-8");
       let message = decoder.decode(value);
-      console.log("onChange - message", message);
+      console.log("message from Arduino", message);
       if (message.includes("Hi from arduino")) {
         console.log(`Handshake completed. Arduino says: ${message}`);
         debugger;

@@ -81,7 +81,7 @@ void useNewData() {
         // I'll be using this for a temperature controller, 
         // but just leaving it here as an example of 
         // the kind of commands you can send.
-        // If you send "setT 72" then you could handle that here.
+        // If you send "setT,72" then you could handle that here.
         if(strcmp(part1, "setT") == 0){ // In this strange world strcmp is 0 if the comparison is true.
           Serial.print("I see targetTemp: ");
           Serial.println(atof(part2));
@@ -89,7 +89,8 @@ void useNewData() {
         }
         if(strcmp(part1, "echo") == 0){
           Serial.println("I must echo...");
-           BluetoothDevice.print(part2);
+          BluetoothDevice.print("Arduino echo: ");
+          BluetoothDevice.print(part2);
         }
         if(strcmp(part1, "getT") == 0){
           Serial.println("I must fetch tempC...");
