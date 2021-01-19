@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import bluetooth from "./helpers/bluetooth";
 export default {
   name: "SendString",
 
@@ -22,12 +23,30 @@ export default {
     count: 0,
     command: "",
   }),
-  beforeDestroy() {
-    this.$store.dispatch("bluetooth/garbageCollect");
-  },
+  // beforeDestroy() {
+  //   this.$store.dispatch("bluetooth/garbageCollect");
+  // },
   methods: {
-    start() {
-      this.$store.dispatch("bluetooth/initializeBluetooth");
+    async start() {
+      this.myCharacteristic = await bluetooth.initialize({}, this.onChange);
+    },
+    onChange(event) {
+      const value = event.target.value;
+      let decoder = new TextDecoder("utf-8");
+      let message = decoder.decode(value);
+      console.log("handleCharacteristicValueChanged - message", message);
+      if (message.includes("A")) {
+        this.count++;
+        console.log("count", this.count);
+        if (this.count > 3) {
+          this.send("Hello from Web");
+          this.count = 0;
+        }
+      }
+    },
+    send(message) {
+      let enc = new TextEncoder(); // By default this encodes to utf-8
+      this.myCharacteristic.writeValue(enc.encode(`<${message}>`));
     },
   },
 };

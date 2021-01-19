@@ -14,7 +14,7 @@ boolean newData = false;
 void setup() {
   Serial.begin(115200); 
   BluetoothDevice.begin(115200);
-  while (!Serial) {
+  while (!Serial || !BluetoothDevice) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
   delay(100);
@@ -92,13 +92,7 @@ void useNewData() {
         if(strcmp(part1, "getT") == 0){
           Serial.println("I must fetch tempC...");
           BluetoothDevice.print("TempC: ");
-          BluetoothDevice.println(heater.getTempC());
         }
         newData = false;
     }
 }
-
-
-
-
-
