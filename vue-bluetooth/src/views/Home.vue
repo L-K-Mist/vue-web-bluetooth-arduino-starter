@@ -15,6 +15,7 @@
                 v-model="command"
                 @keydown.enter="send(command)"
                 :counter="12"
+                v-mask="'XXXXXXXXXXXX'"
               ></v-text-field>
               <v-checkbox
                 style="width: 80px;"
