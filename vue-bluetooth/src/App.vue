@@ -9,7 +9,9 @@
     </v-app-bar>
 
     <v-main>
-      <router-view></router-view>
+      <v-container>
+        <router-view></router-view>
+      </v-container>
     </v-main>
   </v-app>
 </template>
@@ -38,7 +40,7 @@ export default {
       try {
         this.myCharacteristic = await bluetooth.initialize({}, this.onChange);
       } catch (error) {
-        console.error(error);
+        console.error(error.message);
       }
     },
     onChange(event) {
@@ -48,7 +50,6 @@ export default {
       console.log("message from Arduino", message);
       if (message.includes("Hi from arduino")) {
         console.log(`Handshake completed. Arduino says: ${message}`);
-        debugger;
       }
     },
     send(message) {

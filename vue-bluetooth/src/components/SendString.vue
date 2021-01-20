@@ -1,13 +1,27 @@
 <template>
-  <v-container>
-    <v-text-field
-      name="name"
-      label="label"
-      id="id"
-      v-model="command"
-    ></v-text-field>
-    <v-checkbox v-model="echo" label="Must arduino echo back?"></v-checkbox>
-    <v-btn @click="send(command)" color="success">Send Command</v-btn>
+  <v-container id="send-string">
+    <v-row align="center" justify="center" wrap>
+      <v-col sm="12" md="5">
+        <v-row>
+          <v-text-field
+            name="name"
+            label="Message to Arduino"
+            id="id"
+            v-model="command"
+          ></v-text-field>
+          <v-checkbox
+            style="width: 80px;"
+            v-model="echo"
+            label="Echo?"
+          ></v-checkbox>
+        </v-row>
+      </v-col>
+      <v-col sm="12" md="5" justify="end">
+        <v-btn @click="send(command)" color="success" align-self="end"
+          ><v-icon class="mr-3">mdi-send</v-icon> Send</v-btn
+        >
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -27,3 +41,5 @@ export default {
   },
 };
 </script>
+
+<style scoped></style>

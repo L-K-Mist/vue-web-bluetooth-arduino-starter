@@ -1,5 +1,7 @@
 <template>
-  <send-string></send-string>
+  <v-card>
+    <send-string></send-string>
+  </v-card>
 </template>
 
 <script>
