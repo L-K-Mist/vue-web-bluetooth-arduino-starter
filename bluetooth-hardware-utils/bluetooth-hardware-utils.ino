@@ -2,8 +2,10 @@
 
 /* 
 This is a usefull place to start, while getting to know your bluetooth hardware-module.
-Note: ble_cmd only works while there is no currently active connection.
+Note: ble_cmd only works while there is no currently active bluetooth connection.
 See comment at the end of this file for the commands for the module I was using.
+If you get increasing errors at longer distances (5 meters), it might help to set the 
+baud rate lower with AT+BAUD.
 */
 
 SoftwareSerial ble_device(3,4);

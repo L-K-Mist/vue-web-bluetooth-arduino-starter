@@ -17,7 +17,6 @@
 
 <script>
 import bluetooth from "@/helpers/bluetooth";
-
 export default {
   data: () => ({
     message: null,
@@ -38,16 +37,7 @@ export default {
     },
     onChange(event) {
       const value = event.target.value;
-      let decoder = new TextDecoder("utf-8");
-      let message = decoder.decode(value);
-      console.log("message from Arduino", message);
-      if (message.includes("Hi from arduino")) {
-        console.log(`Handshake completed. Arduino says: ${message}`);
-      }
-    },
-    send(message) {
-      let enc = new TextEncoder(); // By default this encodes to utf-8
-      this.myCharacteristic.writeValue(enc.encode(`<${message}>`));
+      this.$store.dispatch("bluetooth/decodeMessage", value);
     },
   },
 };

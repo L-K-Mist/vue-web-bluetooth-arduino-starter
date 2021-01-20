@@ -1,3 +1,4 @@
+// Why not just do this all in vuex?  In case someone wants to borrow this code for non-vue apps.
 export default {
   count: 0,
   service: null,
@@ -33,7 +34,7 @@ export default {
         handler
       );
       console.log("Notifications have been started: ", this.characteristic);
-      await wait(500);
+      await wait(500); // At further distances I was getting `Connection failed for unknown reason`. Not yet sure if this helped.
       this.send("Hi from web"); // Arduino is expecting this message as part of the initial handshake.
       return this.characteristic;
     } catch (error) {
