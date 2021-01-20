@@ -6,12 +6,14 @@ export default {
   async initialize(configuration, handler) {
     try {
       const device = await navigator.bluetooth.requestDevice({
-        filters: [
-          {
-            name: configuration.name || "BT05",
-          },
-        ],
-        optionalServices: [configuration.serviceId || 0xffe0],
+        acceptAllDevices: true,
+        // // Uncomment to replace acceptAllDevices, if you want to be more specific
+        // filters: [
+        //   {
+        //     name: configuration.name || "BT05",
+        //   },
+        // ],
+        // optionalServices: [configuration.serviceId || 0xffe0],
       });
       this.server = await device.gatt.connect();
     } catch (error) {
@@ -31,7 +33,7 @@ export default {
         handler
       );
       console.log("Notifications have been started: ", this.characteristic);
-      await sleep(500);
+      await wait(500);
       this.send("Hi from web"); // Arduino is expecting this message as part of the initial handshake.
       return this.characteristic;
     } catch (error) {
@@ -46,6 +48,4 @@ export default {
     this.characteristic.writeValue(enc.encode(`<${message}>`));
   },
 };
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

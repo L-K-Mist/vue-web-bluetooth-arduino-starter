@@ -92,7 +92,6 @@ void useNewData() {
         }
         if(strcmp(part1, "echo") == 0){
           Serial.println("I must echo...");
-          BluetoothDevice.print("Arduino echo: ");
           BluetoothDevice.print(part2);
         }
         if(strcmp(part1, "getT") == 0){
