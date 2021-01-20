@@ -7,7 +7,6 @@
         ><v-icon class="mr-3">mdi-bluetooth</v-icon> See Devices</v-btn
       >
     </v-app-bar>
-
     <v-main>
       <v-container>
         <router-view></router-view>
@@ -28,12 +27,6 @@ export default {
   }),
   mounted() {
     // this.start(); // This just demonstrates that start only works if triggered by a user action.
-  },
-  beforeDestroy() {
-    this.myCharacteristic.removeEventListener(
-      "characteristicvaluechanged",
-      this.onChange
-    );
   },
   methods: {
     async start() {

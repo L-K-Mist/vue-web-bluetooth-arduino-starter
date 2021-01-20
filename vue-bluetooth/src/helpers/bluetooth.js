@@ -8,12 +8,11 @@ export default {
       const device = await navigator.bluetooth.requestDevice({
         filters: [
           {
-            name: "BT05",
+            name: configuration.name || "BT05",
           },
         ],
-        optionalServices: [0xffe0],
+        optionalServices: [configuration.serviceId || 0xffe0],
       });
-
       this.server = await device.gatt.connect();
     } catch (error) {
       console.error("Error in initial setup");
