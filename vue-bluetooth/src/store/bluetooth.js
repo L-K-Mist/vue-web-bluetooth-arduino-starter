@@ -1,8 +1,9 @@
 import bluetooth from "../helpers/bluetooth";
 let decoder = new TextDecoder("utf-8");
-let encoder = new TextEncoder(); // By default this encodes to utf-8
+
 const state = {
   message: "",
+  isConnected: false,
 };
 
 const getters = {};
@@ -18,11 +19,17 @@ const actions = {
   sendMessage(_, message) {
     bluetooth.send(message);
   },
+  isConnected({ commit }, isConnected) {
+    commit("isConnected", isConnected);
+  },
 };
 
 const mutations = {
   setMessage(state, message) {
     state.message = message;
+  },
+  isConnected(state, isConnected) {
+    state.isConnected = isConnected;
   },
 };
 

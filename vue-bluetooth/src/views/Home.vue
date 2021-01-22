@@ -1,13 +1,27 @@
 <template>
   <v-card>
-    <v-card-title>
-      Send Messages to your Arduino
-    </v-card-title>
-    <v-card-text>
-      <v-form>
-        <v-row align="center" justify="center" wrap>
-          <v-col sm="12" md="5">
-            <v-row>
+    <template v-if="isConnected || true">
+      <v-card-title>
+        Send Messages to your Arduino
+      </v-card-title>
+      <v-card-text>
+        <p>
+          The module seems to get
+          <code>DOMException: GATT operation failed for unknown reason</code>
+          on strings longer than 12 characters, even when I changed the numChars
+          on the arduino side. Keep in mind though: you're more likely to be
+          sending commands like <code>getTemp</code> and
+          <code>setTemp,55</code> than full sentences.
+        </p>
+        <v-form>
+          <v-row
+            class="message-module"
+            width="400"
+            align="center"
+            justify="center"
+            wrap
+          >
+            <div class="check-input">
               <v-text-field
                 name="name"
                 label="Message to Arduino"
@@ -22,19 +36,23 @@
                 v-model="echo"
                 label="Echo?"
               ></v-checkbox>
-            </v-row>
-          </v-col>
-          <v-col sm="12" md="5" justify="end">
-            <v-btn @click="send(command)" color="success" align-self="end"
+            </div>
+            <v-btn
+              class="ml-2 send-button"
+              @click="send(command)"
+              color="success"
+              align-self="end"
               ><v-icon class="mr-3">mdi-send</v-icon> Send</v-btn
             >
-          </v-col>
+          </v-row>
+        </v-form>
+        <v-row>
+          <v-col xs="12"
+            >Arduino says: <strong>{{ arduinoSays }}</strong></v-col
+          >
         </v-row>
-      </v-form>
-      <v-row>
-        <v-col xs="12">Arduino says: {{ arduinoSays }}</v-col>
-      </v-row>
-    </v-card-text>
+      </v-card-text>
+    </template>
   </v-card>
 </template>
 
@@ -50,6 +68,9 @@ export default {
     arduinoSays() {
       return this.$store.state.bluetooth.message;
     },
+    isConnected() {
+      return this.$store.state.bluetooth.isConnected;
+    },
   },
   methods: {
     send(message) {
@@ -58,3 +79,28 @@ export default {
   },
 };
 </script>
+
+<style>
+.send-button {
+  width: 100px;
+}
+
+.message-module {
+  width: 450px;
+  border: 2px dotted blue;
+}
+.check-input {
+  display: inline-flex;
+  /* border: 2px dotted purple; */
+}
+.check-input .v-text-field {
+  width: 200px;
+  /* border: 2px dotted blue; */
+  margin-right: 10px;
+}
+
+/* .check-input .v-input {
+  width: 100px;
+  border: 2px dotted green;
+} */
+</style>
