@@ -4,11 +4,7 @@
       Web Bluetooth Temp Controller
       <v-spacer></v-spacer>
       <v-badge :value="isConnected" color="success" icon="mdi-check" overlap>
-        <v-btn
-          class="blue--text text--darken-4"
-          :disabled="isConnected"
-          color="accent"
-          @click="start"
+        <v-btn class="blue--text text--darken-4" color="accent" @click="start"
           ><v-icon class="mr-3">mdi-bluetooth</v-icon>
           {{ isConnected ? "Connected" : "See Devices" }}</v-btn
         >
