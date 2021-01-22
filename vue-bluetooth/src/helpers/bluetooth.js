@@ -7,14 +7,14 @@ export default {
   async initialize(configuration, handler) {
     try {
       const device = await navigator.bluetooth.requestDevice({
-        acceptAllDevices: true,
-        // // Uncomment to replace acceptAllDevices, if you want to be more specific
-        // filters: [
-        //   {
-        //     name: configuration.name || "BT05",
-        //   },
-        // ],
-        // optionalServices: [configuration.serviceId || 0xffe0],
+        // acceptAllDevices: true,
+        // Uncomment to replace acceptAllDevices, if you want to be more specific
+        filters: [
+          {
+            name: configuration.name || "BT05",
+          },
+        ],
+        optionalServices: [configuration.serviceId || 0xffe0],
       });
       this.server = await device.gatt.connect();
     } catch (error) {
