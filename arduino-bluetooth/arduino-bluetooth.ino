@@ -1,11 +1,5 @@
 #include <SoftwareSerial.h>
 
-// Analog pin used to read the NTC
-#define NTC_PIN A0
-
-// Global temperature reading
-float temp;
-
 SoftwareSerial BluetoothDevice(3,4);
 
 const byte numChars = 32;
