@@ -82,11 +82,10 @@ export default {
 
 <style>
 .send-button {
-  width: 100px;
+  max-width: 100px;
 }
-
 .message-module {
-  width: 450px;
+  max-width: 450px;
   border: 2px dotted blue;
 }
 .check-input {
@@ -94,13 +93,8 @@ export default {
   /* border: 2px dotted purple; */
 }
 .check-input .v-text-field {
-  width: 200px;
+  max-width: 200px;
   /* border: 2px dotted blue; */
   margin-right: 10px;
 }
-
-/* .check-input .v-input {
-  width: 100px;
-  border: 2px dotted green;
-} */
 </style>
