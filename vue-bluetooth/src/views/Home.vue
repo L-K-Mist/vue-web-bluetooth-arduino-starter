@@ -86,7 +86,7 @@ export default {
 }
 .message-module {
   max-width: 450px;
-  border: 2px dotted blue;
+  /* border: 2px dotted blue; */
 }
 .check-input {
   display: inline-flex;

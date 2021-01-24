@@ -79,7 +79,7 @@ void ble_help(){
   }
 }
 
-/*
+/* Help result for JDY-08 CC2541 BLUETOOTH 4.0 BLE SERIAL MODULE
  Command             Description			           
  ---------------------------------------------------------------- 
  AT                  Check if the command terminal work normally  
