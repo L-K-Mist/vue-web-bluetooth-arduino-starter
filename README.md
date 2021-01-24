@@ -19,6 +19,8 @@ Make sure your browser has web-bluetooth enabled.
 
 Note that web-bluetooth only works with Bluetooth Low Energy (BLE) 4.0 devices.
 
+The BLE Serial Module is a simplification of the full BLE approach. There is only one service (0xffe0), and one characteristic (0xffe1). So all messaging consists of changing that one characteristic from either the app or the arduino side.
+
 The exact module I used has a default baud rate of 115200. I will probably drop that down to 9600 for my personal projects, because I think that will carry the messages better over longer distances. Some examples of such commands can be seen in [bluetooth-hardware-utils.ino](bluetooth-hardware-utils/bluetooth-hardware-utils.ino) , but different modules might differ, so refer to the datasheet for specifics.
 
 ## To Do
