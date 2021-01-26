@@ -7,11 +7,11 @@ Maybe software isn't eating the *whole* world, but it certainly is gobbling up p
 
 Now you can give any arduino project a GUI.
 
-Based heavily off of the vanilla [WebBluetooth-Terminal](https://github.com/hewittwill/WebBluetooth-Terminal), and [Web Bluetooth Samples](https://googlechrome.github.io/samples/web-bluetooth/)
+Based heavily off of the vanilla [WebBluetooth-Terminal](https://github.com/hewittwill/WebBluetooth-Terminal), and [Web Bluetooth Samples](https://googlechrome.github.io/samples/web-bluetooth/).
 
-This was the exact module used: [JDY-08 CC2541 BLUETOOTH 4.0 BLE SERIAL MODULE](https://www.diyelectronics.co.za/store/bluetooth/1441-jdy-08-cc2541-bluetooth-40-ble-serial-module.html)
+This was the exact module used: [JDY-08 CC2541 BLUETOOTH 4.0 BLE SERIAL MODULE](https://www.diyelectronics.co.za/store/bluetooth/1441-jdy-08-cc2541-bluetooth-40-ble-serial-module.html).
 
-Here's a [video intro and demo](https://www.youtube.com/watch?v=4jZKu5tQWnM).
+Here's a [video intro and demo](https://www.youtube.com/watch?v=4jZKu5tQWnM) under 5 minutes long.
 
 
 ## Potential Gotchas
