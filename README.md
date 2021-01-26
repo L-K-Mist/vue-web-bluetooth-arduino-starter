@@ -1,4 +1,4 @@
-# vue-web-bluetooth-arduino-starter
+# Vue web-bluetooth arduino-starter
 
 A nice starting point for a PWA that talks to an arduino.
 Opens up a way to use a standby phone as a gui for multiple hobby, home and security devices.
