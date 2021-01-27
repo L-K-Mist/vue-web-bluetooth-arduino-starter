@@ -7,8 +7,8 @@ typedef void(*UseNewDataFunction)();
 class Bluetooth {
     private:
     SoftwareSerial* _device;
-    const uint8_t _numChars = 32;
-    char _receivedChars[32];
+    static const uint8_t _numChars = 32;
+    char _receivedChars[_numChars];
     public:
     boolean newData;
     Bluetooth(SoftwareSerial* hardwareModule, UseNewDataFunction callback);

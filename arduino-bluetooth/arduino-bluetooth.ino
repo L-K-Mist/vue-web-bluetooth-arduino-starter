@@ -3,6 +3,8 @@
 
 SoftwareSerial BluetoothDevice(3,4);
 void onMessageReceived(void){}
+// &BluetoothDevice is dependency injection and composition. myBluetooth has a BluetoothDevice.
+// onMessageReceived is a callback function.
 Bluetooth myBluetooth(&BluetoothDevice, onMessageReceived);
 
 void setup() {

@@ -6,7 +6,6 @@ Bluetooth::Bluetooth(SoftwareSerial* hardwareModule, UseNewDataFunction callback
 :_device(hardwareModule), handleMessage(callback)
 {
     newData = false;
-    
 }
 
 void Bluetooth::initialize(){
@@ -22,12 +21,10 @@ void Bluetooth::receive(){
     char incomingCharacter;
 
     while (_device->available() > 0 && newData == false) {
-         Serial.print("reading");
         incomingCharacter = _device->read();
         Serial.print(incomingCharacter);
         if (incomingCharacter == startMarker) {
             receiveInProgress = true;
-            Serial.print("receive in progress ");
             break;
         }
         if (receiveInProgress == true) {
@@ -45,8 +42,6 @@ void Bluetooth::receive(){
                 newData = true;
             }
         }
-        Serial.print("received chars");
-        Serial.println(_receivedChars);
     }
 }
 
@@ -56,6 +51,7 @@ void Bluetooth::useNewData(){
         Serial.println(_receivedChars);
 
         const char * delimiter = ",";
+        // Split the message into maximum 3 comma-delimetered elements of an array.
         char * parts[3]={strtok(_receivedChars,delimiter), strtok (NULL,delimiter), strtok (NULL,delimiter)};
 
         if(strcmp(parts[0], "Hi from web") == 0){
