@@ -13,7 +13,7 @@ This was the exact hardware module used: [JDY-08 CC2541 BLUETOOTH 4.0 BLE SERIAL
 
 Here's a [video intro and demo](https://www.youtube.com/watch?v=4jZKu5tQWnM) under 5 minutes long.
 
-Once you're familiar with the approach on the arduino side; you might prefer [this Bluetooth-as-library branch](https://github.com/L-K-Mist/vue-web-bluetooth-arduino-starter/tree/Bluetooth-as-library) where much of the code is abstracted into a local Bluetooth library.
+Once you're familiar with the approach on the arduino side; you might prefer [this Bluetooth-as-library branch](https://github.com/L-K-Mist/vue-web-bluetooth-arduino-starter/blob/Bluetooth-as-library/arduino-bluetooth/arduino-bluetooth.ino) where much of the code is abstracted into a local Bluetooth library.
 
 ## Potential Gotchas
 
