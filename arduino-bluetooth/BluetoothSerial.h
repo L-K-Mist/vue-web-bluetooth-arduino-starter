@@ -8,15 +8,16 @@ class Bluetooth {
     private:
     static const uint8_t _numChars = 32;
     char _receivedChars[_numChars];
-    public:
     SoftwareSerial* _device; // TODO change to public naming.
     boolean newData;
-    Bluetooth(SoftwareSerial* hardwareModule, UseNewDataFunction callback);
-    // Bluetooth(SoftwareSerial* hardwareModule);
-    UseNewDataFunction handleMessage;
-    void initialize(void);
     void receive(void);
     void useNewData(void);
+    UseNewDataFunction handleMessage;
+    public:
+    Bluetooth(SoftwareSerial* hardwareModule, UseNewDataFunction callback);
+    // Bluetooth(SoftwareSerial* hardwareModule);
+    void setup(void);
+    void loop(void);
 };
 
 #endif

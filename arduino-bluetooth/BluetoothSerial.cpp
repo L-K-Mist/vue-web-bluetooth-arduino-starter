@@ -8,9 +8,14 @@ Bluetooth::Bluetooth(SoftwareSerial* hardwareModule, UseNewDataFunction callback
     newData = false;
 }
 
-void Bluetooth::initialize(){
+void Bluetooth::setup(){
     _device->begin(115200);
     Serial.println("initialized");
+}
+
+void Bluetooth::loop() {
+    this->receive();
+    this->useNewData();
 }
 
 void Bluetooth::receive(){
