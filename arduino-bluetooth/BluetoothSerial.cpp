@@ -54,31 +54,10 @@ void Bluetooth::useNewData(){
         // Split the message into maximum 3 comma-delimetered elements of an array.
         char * parts[3]={strtok(_receivedChars,delimiter), strtok (NULL,delimiter), strtok (NULL,delimiter)};
 
-        if(strcmp(parts[0], "Hi from web") == 0){
-          Serial.println("Yay web says hi!");
-          _device->println("Hi from arduino");
-        }
-        if(strcmp(parts[0], "setTemp") == 0){ // In this strange world strcmp is 0 if the comparison is true.
-          Serial.print("I see targetTemp: ");
-          Serial.println(atof(parts[1]));
-          _device->print("Aiming for ");
-          _device->print(atof(parts[1]));
-          _device->println("C");
-          delay(3000);
-          _device->println("And that's great news to me.");
-        }
-        if(strcmp(parts[0], "echo") == 0){
-          Serial.println("I must echo...");
-          _device->print("I echo back    ");
-          _device->println(parts[1]);
-        }
-        if(strcmp(parts[0], "getTemp") == 0){
-          Serial.println("I must fetch tempC...");
-          _device->print("TempC: ");
-          // Heater.getTemp();
-        }
+        handleMessage(parts, _device);
         newData = false;
     }
 }
+
 
 

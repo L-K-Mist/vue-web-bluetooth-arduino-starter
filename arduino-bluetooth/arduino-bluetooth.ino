@@ -2,9 +2,37 @@
 #include "BluetoothSerial.h"
 
 SoftwareSerial BluetoothDevice(3,4);
-void onMessageReceived(void){}
-// &BluetoothDevice is dependency injection and composition. myBluetooth has a BluetoothDevice.
+
 // onMessageReceived is a callback function.
+// This is where you decide the message logic.
+// Each message has a maximum of three comma-separated parts.
+// Note that I haven't used part 3 at all, since I only need parts one and two.
+void onMessageReceived(char * parts[3], SoftwareSerial* device){
+    if(strcmp(parts[0], "Hi from web") == 0){
+        Serial.println("Yay web says hi!");
+        device->println("Hi from arduino");
+    }
+    if(strcmp(parts[0], "setTemp") == 0){ // In this strange world strcmp is 0 if the comparison is true.
+        Serial.print("I see targetTemp: ");
+        Serial.println(atof(parts[1]));
+        device->print("Aiming for ");
+        device->print(atof(parts[1]));
+        device->println("C");
+        delay(3000);
+        device->println("And that's great news to me.");
+    }
+    if(strcmp(parts[0], "echo") == 0){
+        Serial.println("I must echo...");
+        device->print("I echo back    ");
+        device->println(parts[1]);
+    }
+    if(strcmp(parts[0], "getTemp") == 0){
+        Serial.println("I must fetch tempC...");
+        device->print("TempC: ");
+        // Heater.getTemp();
+    }
+}
+// &BluetoothDevice is dependency injection and composition. myBluetooth has a BluetoothDevice; and has a callback.
 Bluetooth myBluetooth(&BluetoothDevice, onMessageReceived);
 
 void setup() {
@@ -13,7 +41,7 @@ void setup() {
     ; // wait for serial port to connect. Needed for native USB port only
   }
   myBluetooth.initialize();
-  delay(1000);
+  delay(500);
 }
 
 void loop() {
