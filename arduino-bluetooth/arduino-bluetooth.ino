@@ -8,8 +8,9 @@ SoftwareSerial BluetoothDevice(bluetoothTxPin, bluetoothRxPin);
 
 // onMessageReceived is a callback function.
 // This is where you decide the message logic.
-// Each message has a maximum of three comma-separated parts.
+// Each message coming from the PWA has a maximum of three comma-separated parts.
 // Note that I haven't used part 3 at all, since - for now - I only need parts one and two.
+// If you don't need comma separation then you can deal only with messageParts[0] if you prefer.
 void onMessageReceived(char * messageParts[3], SoftwareSerial* device){
   if(strcmp(messageParts[0], "Hi from web") == 0){ // In this strange world strcmp is 0 if the comparison is true.
       Serial.println("Yay web says hi!");
