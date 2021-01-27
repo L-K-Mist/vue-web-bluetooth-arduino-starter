@@ -1,5 +1,5 @@
 #include <SoftwareSerial.h>
-#include "BluetoothSerial.h"
+#include "BluetoothSerial.h" // Our local Bluetooth library
 
 const int8_t bluetoothTxPin = 3;
 const int8_t bluetoothRxPin = 4;
