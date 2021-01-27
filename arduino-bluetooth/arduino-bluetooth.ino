@@ -1,5 +1,5 @@
 #include <SoftwareSerial.h>
-#include "BluetoothSerial.h"
+#include "BluetoothSerial.h" // Our local Bluetooth library
 
 SoftwareSerial BluetoothDevice(3,4);
 
